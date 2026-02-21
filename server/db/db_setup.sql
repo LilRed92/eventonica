@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS events (
+	id SERIAL PRIMARY KEY,
+	name TEXT NOT NULL,
+	event_date DATE NOT NULL,
+	category TEXT NOT NULL,
+)

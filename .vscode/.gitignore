@@ -1,0 +1,6 @@
+# Dev Dependencies
+node_modules/
+
+# Local Files
+.DS_Store
+.history/

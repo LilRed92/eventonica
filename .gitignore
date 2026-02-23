@@ -129,6 +129,12 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# OS
+.DS_Store
+
+#IDE
+.vscode/ 
+
 # User 
 .history/
-.DS_Store
+TODO

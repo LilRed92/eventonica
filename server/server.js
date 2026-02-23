@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import routes from './routes/routes.js'
+import route from './routes/routes.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true }));
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.use('/api', routes);
+app.use('/api', route);
 
 app.get('/', (req, res) => res.json({ message: 'Hello from the server!' }));
 

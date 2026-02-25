@@ -138,3 +138,7 @@ dist
 # User 
 .history/
 TODO
+generate-commit.js
+.husky/
+commitlint.config.js
+.ai-commit-rules.txt

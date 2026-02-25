@@ -24,3 +24,12 @@ INSERT INTO categories (category_name, emoji, color) VALUES
     ('Food & Drink', '🍻', '#ebf700'),
     ('Networking', '👥', '#00ddff'),
 	('Other', '🎉', '#3498DB');
+	
+CREATE INDEX idx_events_category ON events(category);
+
+CREATE INDEX idx_is_favorite ON events(is_favorite);
+
+CREATE INDEX idx_event_name ON events USING gin(to_tsvector('english', event_name));
+
+
+

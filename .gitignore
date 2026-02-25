@@ -133,7 +133,7 @@ dist
 .DS_Store
 
 #IDE
-.vscode/ 
+.vscode/
 
 # User 
 .history/

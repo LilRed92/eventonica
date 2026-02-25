@@ -134,6 +134,8 @@ dist
 
 #IDE
 .vscode/
+**./vscode
+.vscode
 
 # User 
 .history/

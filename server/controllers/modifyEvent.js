@@ -6,21 +6,19 @@ dotenv.config();
 export const modifyEvent = async (req, res) => {
     const eventId = req.params.eventId;
     const updatedEvent = {
-        id: req.query.id,
-        event_name: req.query.newEventName,
-        category: req.query.selectedCategory,
-        event_description: req.query.newDescription,
-        start_time: req.query.newStart,
-        end_time: req.query.newEnd,
-        is_favorite: req.query.newFavorite
+        id: req.body.id,
+        event_name: req.body.updatedEventName,
+        category: req.body.updatedCategory,
+        event_description: req.body.updatedDescription,
+        start_time: req.body.updatedStart,
+        end_time: req.body.updatedEnd,
+        is_favorite: req.body.updatedFavorite
     }
-    const query = `UPDATE events SET event_name=$1, category=$2, event_description=$3, start_time=$4, end_time=$5, is_favorite=$6 WHERE id =${eventId} RETURNING *`; 
-    const values = [updatedEvent.event_name, updatedEvent.category, updatedEvent.event_description, updatedEvent.start_time, updatedEvent.end_time, updatedEvent.is_favorite];
+    const query = `UPDATE events SET event_name=$2, category=$3, event_description=$4, start_time=$5, end_time=$6, is_favorite=$7 WHERE id=$1 RETURNING *`; 
+    const values = [id, updatedEvent.event_name, updatedEvent.category, updatedEvent.event_description, updatedEvent.start_time, updatedEvent.end_time, updatedEvent.is_favorite];
     try {
         const updated = await db.query(query, values);
-        res.json(updated.rows[0]);
         res.send(updated.rows[0]);
-        db.release();
         console.log('PATCH QUERY TO UPDATE AN EVENT IS WORKING');
     } catch(err) {
         console.error('Error updating eventonica DB:', err);

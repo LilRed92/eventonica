@@ -23,7 +23,7 @@ route.get('/events', getEvents);
 route.post('/events', createEvent);
 
 // Endpoint for PATCH request to modify an event (modifyEvent.js)
-route.patch('/events/:id', modifyEvent);
+route.patch('/events/:eventId', modifyEvent);
 
 // Endpoint for PUT request to toggle "liked/!liked" on event (toggleFavorite.js)
 route.put('/events/:id/favorite', toggleFavorite);

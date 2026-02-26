@@ -2,14 +2,27 @@ import dotenv from 'dotenv';
 import db from '../db/db-connection.js';
 dotenv.config();
 
+
+function getQuery(searchInput) {
+    if(searchInput) {
+        const query = {
+            text: 'SELECT * FROM events WHERE event_name = $1',
+            values: [searchInput],
+          };
+          return query;
+    } else {
+        return 'SELECT * FROM events';
+    }
+}
 // Logic for GET request for all events with endpoint '/events'
 export const getAllEvents = async (req, res) => {
+    const searchInput = req.query.searchInput;
     try {
-        const { rows: events } = await db.query('SELECT * FROM events');
+        const { rows: events } = await db.query(getQuery(searchInput));
         res.json(events);
         res.send(events);
         db.release();
-        console.log('GET QUERY OF ALL EVENTS IS WORKING');
+        console.log('GET QUERY OF EVENTS IS WORKING');
 
     } catch (err) {
         console.error('Error querying eventonica DB:', err);

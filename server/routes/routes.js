@@ -17,7 +17,8 @@ route.get('/', (req, res) => {
 route.get('/events', getAllEvents);
 
 // Endpoint for GET request for specific event (getEvent.js)
-route.get('/events/:id', getEvent);
+
+// route.get('/events/:id', getEvent);
 
 // Endpoint for POST request to create an event (createEvent.js)
 route.post('/events', createEvent);

@@ -7,15 +7,16 @@ const ListEvents = () => {
 
     // this is my original state with an array of students 
     const [events, setEvents] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
 
     //this is the state needed for the UpdateRequest
     // const [editingStudent, setEditingStudent] = useState(null)
 
     const loadEvent= (searchInput) => {
         // A function to fetch the list of students that will be load anytime that list change
-        const params = new URLSearchParams({ })
+        //const params = new URLSearchParams({search })
         
-        fetch(`http://localhost:8080/api/events${params}`)
+        fetch(`http://localhost:8080/api/events?searchInput=${searchInput || ''}`)
             .then((res) => response.json())
             .then((events) => {
                 setStudents(events);

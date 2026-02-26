@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import db from '../db/db-connection.js';
 dotenv.config();
 
-// Logic for PATCH request for selected event with endpoint '/events/:id'
+// Logic for DELETE request for selected event with endpoint '/events/:eventId'
 export const deleteEvent = async (req, res) => {
     try {
         const eventId = req.params.eventId;

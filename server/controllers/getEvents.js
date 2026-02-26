@@ -6,7 +6,7 @@ dotenv.config();
 function getQuery(searchInput) {
     if(searchInput) {
         const query = {
-            text: 'SELECT * FROM events WHERE event_name = $1',
+            text: 'SELECT * FROM events WHERE event_name=$1',
             values: [searchInput],
           };
           return query;
@@ -15,7 +15,7 @@ function getQuery(searchInput) {
     }
 }
 // Logic for GET request for all events with endpoint '/events'
-// && GET request for single queried event with endpoint '/events/:id'
+// && GET request for single queried event with endpoint '/events/:eventsId'
 export const getEvents = async (req, res) => {
     const searchInput = req.query.searchInput;
     try {
@@ -24,7 +24,7 @@ export const getEvents = async (req, res) => {
         console.log('GET QUERY OF EVENTS IS WORKING');
 
     } catch (err) {
-        console.error('Error querying eventonica DB:', err);
+        console.error('Error querying events table:', err);
         return res.status(500).json({ message: 'Internal Server Error', detail: err.message });
     }
 }; 

@@ -15,7 +15,7 @@ export const modifyEvent = async (req, res) => {
         is_favorite: req.body.updatedFavorite
     }
     const query = `UPDATE events SET event_name=$2, category=$3, event_description=$4, start_time=$5, end_time=$6, is_favorite=$7 WHERE id=$1 RETURNING *`; 
-    const values = [id, updatedEvent.event_name, updatedEvent.category, updatedEvent.event_description, updatedEvent.start_time, updatedEvent.end_time, updatedEvent.is_favorite];
+    const values = [eventId, updatedEvent.event_name, updatedEvent.category, updatedEvent.event_description, updatedEvent.start_time, updatedEvent.end_time, updatedEvent.is_favorite];
     try {
         const updated = await db.query(query, values);
         res.send(updated.rows[0]);

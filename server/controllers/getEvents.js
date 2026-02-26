@@ -21,7 +21,6 @@ export const getEvents = async (req, res) => {
     try {
         const { rows: events } = await db.query(getQuery(searchInput));
         res.json(events);
-        res.send(events);
         console.log('GET QUERY OF EVENTS IS WORKING');
 
     } catch (err) {

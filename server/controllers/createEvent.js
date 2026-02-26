@@ -6,12 +6,12 @@ dotenv.config();
 export const createEvent = async (req, res) => {
     try {
         const newEvent = {
-            event_name: req.query.newEventName,
-            category: req.query.selectedCategory,
-            event_description: req.query.newDescription,
-            start_time: req.query.newStart,
-            end_time: req.query.newEnd,
-            is_favorite: req.query.newFavorite
+            event_name: req.body.newEventName,
+            category: req.body.selectedCategory,
+            event_description: req.body.newDescription,
+            start_time: req.body.newStart,
+            end_time: req.body.newEnd,
+            is_favorite: req.body.newFavorite
         }
         const result = await db.query(`INSERT INTO events(event_name, category, event_description, start_time, end_time, is_favorite) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [newEvent.event_name, newEvent.category, newEvent.event_description, newEvent.start_time, newEvent.end_time, newEvent.is_favorite]);
         console.log(result.rows[0]);

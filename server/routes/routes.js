@@ -29,7 +29,7 @@ route.patch('/events/:eventId', modifyEvent);
 route.put('/events/:id/favorite', toggleFavorite);
 
 // Endpoint for DELETE request to delete an event (deleteEvent.js)
-route.delete('/events/:id', deleteEvent);
+route.delete('/events/:eventId', deleteEvent);
 
 // Endpoint for GET request for all categories (getCategories.js)
 route.get('/categories', getCategories);

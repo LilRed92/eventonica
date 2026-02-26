@@ -18,7 +18,7 @@ export const modifyEvent = async (req, res) => {
     const values = [eventId, updatedEvent.event_name, updatedEvent.category, updatedEvent.event_description, updatedEvent.start_time, updatedEvent.end_time, updatedEvent.is_favorite];
     try {
         const updated = await db.query(query, values);
-        res.send(updated.rows[0]);
+        res.json(updated.rows[0]);
         console.log('PATCH QUERY TO UPDATE AN EVENT IS WORKING');
     } catch(err) {
         console.error('Error updating eventonica DB:', err);

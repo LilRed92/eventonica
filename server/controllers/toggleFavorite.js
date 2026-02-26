@@ -9,7 +9,7 @@ export const toggleFavorite = async (req, res) => {
         is_favorite: req.body.toggleFavorite
     }
     const query = `UPDATE events SET is_favorite=$2 WHERE id=$1 RETURNING *`; 
-    const values = [eventId, event_name, category, event_description, start_time, end_time, updateFavorite.is_favorite];
+    const values = [eventId, updateFavorite.is_favorite];
     try {
         const toggled = await db.query(query, values);
         res.send(toggled.rows[0]);

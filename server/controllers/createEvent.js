@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import db from '../db/db-connection.js';
 dotenv.config();
 
-// Logic for PUT request for adding an event to events with endpoint '/events'
+// Logic for POST request for adding an event to events with endpoint '/events'
 export const createEvent = async (req, res) => {
     try {
         const newEvent = {

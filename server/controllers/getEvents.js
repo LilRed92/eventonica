@@ -15,7 +15,8 @@ function getQuery(searchInput) {
     }
 }
 // Logic for GET request for all events with endpoint '/events'
-export const getAllEvents = async (req, res) => {
+// && GET request for single queried event with endpoint '/events/:id'
+export const getEvents = async (req, res) => {
     const searchInput = req.query.searchInput;
     try {
         const { rows: events } = await db.query(getQuery(searchInput));
@@ -26,7 +27,6 @@ export const getAllEvents = async (req, res) => {
 
     } catch (err) {
         console.error('Error querying eventonica DB:', err);
-            
         return res.status(500).json({ message: 'Internal Server Error', detail: err.message });
     }
 }; 

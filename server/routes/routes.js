@@ -1,6 +1,5 @@
 import express from 'express';
-import { getAllEvents } from '../controllers/getAllEvents.js';
-import { getEvent } from '../controllers/getEvent.js';
+import { getEvents } from '../controllers/getEvent.js';
 import { createEvent } from '../controllers/createEvent.js';
 import { modifyEvent } from '../controllers/modifyEvent.js';
 import { toggleFavorite } from '../controllers/toggleFavorite.js';
@@ -14,7 +13,7 @@ route.get('/', (req, res) => {
 });
 
 // Endpoint for GET request for all events (getAllEvents.js)
-route.get('/events', getAllEvents);
+route.get('/events', getEvents);
 
 // Endpoint for GET request for specific event (getEvent.js)
 

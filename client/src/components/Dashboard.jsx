@@ -13,8 +13,7 @@ const ListEvents = () => {
     // const [editingStudent, setEditingStudent] = useState(null)
 
     const loadEvent= (searchInput) => {
-        // A function to fetch the list of students that will be load anytime that list change
-        //const params = new URLSearchParams({search })
+        //function to fetch the list of events that will load on page open & on user's search input
         
         fetch(`http://localhost:8080/api/events?searchInput=${searchInput || ''}`)
             .then((res) => response.json())
@@ -33,7 +32,7 @@ const ListEvents = () => {
     }
 
 
-    //A function to control the update in the parent (student component)
+    //function to control the update in the parent (student component)
     const updateStudent = (savedStudent) => {
         // console.log("Line 29 savedStudent", savedStudent);
         // This function should update the whole list of students - 

@@ -1,6 +1,6 @@
-const { Pool } = require('pg');
-const db = new Pool({
+import { Pool } from 'pg';
+export const db = new Pool({
     connectionString: process.env.DATABASE_URI
   });
 
-  module.exports = db;
+  export default db;

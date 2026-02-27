@@ -1,15 +1,15 @@
+import { useReducer, useState } from 'react';
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MyNavBar from './components/Navbar'
-import ListStudents from './components/ListStudents'
+import Dashboard from './components/Dashboard.jsx';
 
 
 function App() {
 
   return (
     <div className="App">
-      <MyNavBar />
-      <ListStudents />
+      <h2>Techtonica Events</h2>
+      <Dashboard />
 
     </div>
   )

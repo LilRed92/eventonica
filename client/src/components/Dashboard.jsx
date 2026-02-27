@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import * as ioicons from 'react-icons/io5'
-import MyForm from './Form';
-import Student from './Student';
+import React, { useState, useEffect, useReducer } from 'react';
+import * as ioicons from 'react-icons/io5';
+import AddEventForm from 'AddEventForm.jsx';
+import EventCard from 'EventCard.jsx';
+import SearchEvents from 'SearchEvents.jsx';
 
-const ListEvents = () => {
+const Dashboard = () => {
 
     // this is my original state with an array of students 
     const [events, setEvents] = useState([]);
@@ -62,15 +63,15 @@ const ListEvents = () => {
 
 
     return (
-        <div className="mybody">
-        <div className="list-students">
-            <h2>Techtonica Participants </h2>
-            <ul>
-                {students.map((student) => {
-                    return <li key={student.id}> <Student student={student} toDelete={onDelete} toUpdate={onUpdate} /></li>
-                })}
-            </ul>
-        </div>
+        <div className="dashboard">
+        <SearchEvents />
+            <div className="events-list">
+                <ul>
+                    {students.map((student) => {
+                        return <li key={student.id}> <Student student={student} toDelete={onDelete} toUpdate={onUpdate} /></li>
+                    })}
+                </ul>
+            </div>
         <MyForm key={editingStudent ? editingStudent.id : null} onSaveStudent={onSaveStudent} editingStudent={editingStudent} onUpdateStudent={updateStudent} />
         </div>
     );

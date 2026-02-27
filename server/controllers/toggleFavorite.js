@@ -12,7 +12,7 @@ export const toggleFavorite = async (req, res) => {
     const values = [eventId, updateFavorite.is_favorite];
     try {
         const toggled = await db.query(query, values);
-        res.send(toggled.rows[0]);
+        res.json(toggled.rows[0]);
         console.log('PUT QUERY TO TOGGLE AN EVENT IS WORKING');
     } catch(err) {
         console.error('Error toggling eventonica DB:', err);

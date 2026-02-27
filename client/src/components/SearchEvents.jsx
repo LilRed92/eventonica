@@ -1,10 +1,8 @@
-
-
-
+import React, { useState, useEffect, useReducer } from 'react';
 
 // TODO add label, placeholder
 
-export function Search({ searchInput, setSearchInput }) {
+export function SearchEvents({ searchInput, setSearchInput }) {
 
     function handleChange(e) {
         setSearchInput(e.target.value)

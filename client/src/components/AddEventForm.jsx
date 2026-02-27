@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Form } from "react-bootstrap"
+import React, { useState, useEffect, useReducer } from 'react';
+import { Button, Form } from "react-bootstrap";
 
-const MyForm = ({ onSaveStudent, editingStudent, onUpdateStudent }) => {
+const AddEventForm = ({ onSaveStudent, editingStudent, onUpdateStudent }) => {
 
     // This is the original State with not initial student 
     const [student, setStudent] = useState(editingStudent || {

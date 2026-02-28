@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import * as ioicons from 'react-icons/io5';
-import AddEventForm from 'AddEventForm.jsx';
 import EventCard from 'EventCard.jsx';
-import SearchEvents from 'SearchEvents.jsx';
+import SearchFilter from 'SearchFilter.jsx';
 
 // TODO Will house logic to fetch for CRUD 
 

@@ -34,7 +34,7 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
 
     const handleToggleFavorite = async () => {
         try {
-            // Hits your toggleFavorite.js controller
+            // Hits toggleFavorite.js controller
             const response = await fetch(`http://localhost:8080/events/${event.id}/favorite`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },

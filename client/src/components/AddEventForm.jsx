@@ -1,122 +1,166 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Button, Form } from "react-bootstrap";
 
-const AddEventForm = ({ onSaveStudent, editingStudent, onUpdateStudent }) => {
+// 1. Define the initial state outside the component
+const initialFormState = {
+    event_name: "",
+    category: "",
+    event_description: "",
+    start_time: "",
+    end_time: "",
+    is_favorite: false
+};
 
-    // This is the original State with not initial student 
-    const [student, setStudent] = useState(editingStudent || {
-        firstname: "",
-        lastname: "",
-        is_current: false
-    });
-
-    //create functions that handle the event of the user typing into the form
-    const handleNameChange = (event) => {
-        const firstname = event.target.value;
-        setStudent((student) => ({ ...student, firstname }));
-
+// 2. Define the reducer function
+const formReducer = (state, action) => {
+    if (action.type === 'RESET_FORM') {
+        return initialFormState;
+    }
+    
+    // Because action.type matches the input name perfectly, 
+    // we can dynamically update the exact key in our state object.
+    return {
+        ...state,
+        [action.type]: action.payload
     };
+};
 
-    const handleLastnameChange = (event) => {
-        const lastname = event.target.value;
-        setStudent((student) => ({ ...student, lastname }));
-    };
+const AddEventForm = ({ onAddEvent }) => {
+    // 3. Initialize useReducer
+    const [eventData, dispatch] = useReducer(formReducer, initialFormState);
+    const [categories, setCategories] = useState([]);
 
-    const handleCheckChange = (event) => {
-        const is_current = event.target.checked;
-        //console.log(iscurrent);
-        setStudent((student) => ({ ...student, is_current }));
+    useEffect(() => {
+        fetch("http://localhost:8080/categories") 
+            .then((response) => response.json())
+            .then((data) => setCategories(data))
+            .catch((error) => console.error("Error fetching categories:", error));
+    }, []);
+
+    // 4. Dispatch the action type as the input's name
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        dispatch({
+            type: name, // This passes 'event_name', 'category', etc.
+            payload: type === 'checkbox' ? checked : value
+        });
     };
 
     const clearForm = () => {
-        setStudent({ firstname: "", lastname: "", is_current: false })
-    }
-
-    //A function to handle the post request
-    const postStudent = (newStudent) => {
-        return fetch("http://localhost:8080/api/students", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newStudent),
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                //console.log("From the post ", data);
-                //I'm sending data to the List of Students (the parent) for updating the list
-                onSaveStudent(data);
-                //this line just for cleaning the form
-                clearForm();
-            });
+        dispatch({ type: 'RESET_FORM' });
     };
 
-    //A function to handle the post request
-    const putStudent = (toEditStudent) => {
-        return fetch(`http://localhost:8080/api/students/${toEditStudent.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(toEditStudent),
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                onUpdateStudent(data);
-                //this line just for cleaning the form
-                clearForm();
-            });
-    };
-
-
-    //A function to handle the submit in both cases - Post and Put request!
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (student.id) {
-            putStudent(student);
-        } else {
-            postStudent(student);
+        
+        // Map the reducer state to your backend's expected payload
+        const payload = {
+            newEventName: eventData.event_name,
+            selectedCategory: eventData.category,
+            newDescription: eventData.event_description,
+            newStart: eventData.start_time,
+            newEnd: eventData.end_time,
+            newFavorite: eventData.is_favorite
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/events", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+            const data = await response.json();
+            
+            onAddEvent(data); 
+            clearForm();
+        } catch (error) {
+            console.error("Error posting event:", error);
         }
     };
 
     return (
-        <Form className='form-students' onSubmit={handleSubmit}>
+        <Form className='form-events' onSubmit={handleSubmit}>
             <Form.Group>
-                <Form.Label>First Name</Form.Label>
+                <Form.Label>Event Name</Form.Label>
                 <input
                     type="text"
-                    id="add-user-name"
-                    placeholder="First Name"
+                    name="event_name"
+                    placeholder="Event Name"
                     required
-                    value={student.firstname}
-                    onChange={handleNameChange}
+                    value={eventData.event_name}
+                    onChange={handleChange}
                 />
             </Form.Group>
+
             <Form.Group>
-                <Form.Label>Last Name</Form.Label>
+                <Form.Label>Category</Form.Label>
+                <Form.Select 
+                    name="category" 
+                    value={eventData.category} 
+                    onChange={handleChange} 
+                    required
+                    style={{ display: 'block', width: '100%', border: '3px solid #98d0f1' }}
+                >
+                    <option value="" disabled>Select a category...</option>
+                    {categories.map((cat, index) => (
+                        <option key={index} value={cat.name || cat.category_name}>
+                            {cat.name || cat.category_name}
+                        </option>
+                    ))}
+                </Form.Select>
+            </Form.Group>
+
+            <Form.Group>
+                <Form.Label>Description</Form.Label>
                 <input
                     type="text"
-                    id="add-user-lastname"
-                    placeholder="Last Name"
-                    required
-                    value={student.lastname}
-                    onChange={handleLastnameChange}
+                    name="event_description"
+                    placeholder="Description"
+                    value={eventData.event_description}
+                    onChange={handleChange}
                 />
             </Form.Group>
+
+            <Form.Group>
+                <Form.Label>Start Time</Form.Label>
+                <input
+                    type="datetime-local"
+                    name="start_time"
+                    required
+                    value={eventData.start_time}
+                    onChange={handleChange}
+                    style={{ display: 'block', width: '100%', border: '3px solid #98d0f1' }}
+                />
+            </Form.Group>
+
+            <Form.Group>
+                <Form.Label>End Time</Form.Label>
+                <input
+                    type="datetime-local"
+                    name="end_time"
+                    required
+                    value={eventData.end_time}
+                    onChange={handleChange}
+                    style={{ display: 'block', width: '100%', border: '3px solid #98d0f1' }}
+                />
+            </Form.Group>
+
             <Form.Check
-                type={'checkbox'}
-                id={`isCurrent`}
-                checked={student.is_current}
-                onChange={handleCheckChange}
-                label={`Are they in the current program?`}
+                type="checkbox"
+                name="is_favorite"
+                id="isFavorite"
+                checked={eventData.is_favorite}
+                onChange={handleChange}
+                label="Favorite this event?"
             />
+
             <Form.Group>
-            <Button type="submit" variant="outline-success">{student.id ? "Edit Student" : "Add Student"}</Button>
-            {student.id ? <Button type="button" variant="outline-warning" onClick={clearForm}>Cancel</Button> : null}
+                <Button type="submit" variant="outline-success" style={{ marginTop: '1rem' }}>
+                    Add Event
+                </Button>
             </Form.Group>
         </Form>
     );
 };
 
-
-export default MyForm
+export default AddEventForm;

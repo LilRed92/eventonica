@@ -11,11 +11,12 @@ const Dashboard = () => {
     // this is my original state with an array of students 
     const [events, setEvents] = useState([]);
     const [searchInput, setSearchInput] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
 
     //this is the state needed for the UpdateRequest
     // const [editingStudent, setEditingStudent] = useState(null)
 
-    const loadEvent= (searchInput) => {
+    const loadEvents= (searchInput) => {
         //function to fetch the list of events that will load on page open & on user's search input
         fetch(`http://localhost:8080/api/events?searchInput=${searchInput || ''}`)
             .then((res) => response.json())
@@ -25,7 +26,7 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        loadEvent(searchInput);
+        loadEvents(searchInput);
     }, [searchInput]);
 
     const onEventSave = (newEvent) => {
@@ -61,17 +62,47 @@ const Dashboard = () => {
 
     }
 
+    const toggleModal = () => {
+        setModalOpen(true)
+    }
+
+    const handleDelete = async (event) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/events/${event.id}`, { method: "DELETE" });
+
+            if(!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            };
+            const events = await response.json();
+            return events
+        } catch (err) {
+            console.error('Fetch error:', err);
+        }
+    };
+
 
 
     return (
         <div className="dashboard">
-        <SearchEvents />
+        <SearchFilter />
+        <button onClick={toggleModal}>+ New Event</button>
             <div className="events-list">
-                {listView ? <ul>
+                <table>
+                    <tbody>
                     {events.map((event) => {
-                        return <li key={event.id}> </li>
+                        <tr key={event.id}>
+                            <td>{event.event_name}</td>
+                            <td>{event.category}</td>
+                            <td>{event.event_description}</td>
+                            <td>{event.start_time}</td>
+                            <td>{event.end_time}</td>
+                            {/* <td>{event.start_time}</td> */}
+                            <td><button onClick={toggleModal} className="editBtn">Edit</button></td>
+                            <td><button onClick={handleDelete} className="deleteBtn">Delete</button></td>
+                        </tr>
                     })}
-                </ul>}
+                    </tbody>
+                </table>
                 {/* <ul>
                     {students.map((student) => {
                         return <li key={student.id}> <Student student={student} toDelete={onDelete} toUpdate={onUpdate} /></li>
@@ -80,6 +111,7 @@ const Dashboard = () => {
             </div>
         <MyForm key={editingStudent ? editingStudent.id : null} onSaveStudent={onSaveStudent} editingStudent={editingStudent} onUpdateStudent={updateStudent} /> */}
             </div>
+            {modalOpen && <EventCard setModalOpen={setModalOpen} />}
         </div>
     );
 }

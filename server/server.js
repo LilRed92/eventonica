@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import route from './routes/routes.js'
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true }));

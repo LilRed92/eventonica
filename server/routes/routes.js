@@ -26,7 +26,7 @@ route.post('/events', createEvent);
 route.patch('/events/:eventId', modifyEvent);
 
 // Endpoint for PUT request to toggle "liked/!liked" on event (toggleFavorite.js)
-route.put('/events/:eventId/favorite', toggleFavorite);
+route.put('/events/:eventId/favorites', toggleFavorite);
 
 // Endpoint for DELETE request to delete an event (deleteEvent.js)
 route.delete('/events/:eventId', deleteEvent);

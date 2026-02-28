@@ -4,6 +4,8 @@ import AddEventForm from 'AddEventForm.jsx';
 import EventCard from 'EventCard.jsx';
 import SearchEvents from 'SearchEvents.jsx';
 
+// TODO Will house logic to fetch for CRUD 
+
 const Dashboard = () => {
 
     // this is my original state with an array of students 
@@ -15,11 +17,10 @@ const Dashboard = () => {
 
     const loadEvent= (searchInput) => {
         //function to fetch the list of events that will load on page open & on user's search input
-        
         fetch(`http://localhost:8080/api/events?searchInput=${searchInput || ''}`)
             .then((res) => response.json())
             .then((events) => {
-                setStudents(events);
+                setEvents(events);
             });
     }
 
@@ -66,13 +67,19 @@ const Dashboard = () => {
         <div className="dashboard">
         <SearchEvents />
             <div className="events-list">
-                <ul>
+                {listView ? <ul>
+                    {events.map((event) => {
+                        return <li key={event.id}> </li>
+                    })}
+                </ul>}
+                {/* <ul>
                     {students.map((student) => {
                         return <li key={student.id}> <Student student={student} toDelete={onDelete} toUpdate={onUpdate} /></li>
                     })}
                 </ul>
             </div>
-        <MyForm key={editingStudent ? editingStudent.id : null} onSaveStudent={onSaveStudent} editingStudent={editingStudent} onUpdateStudent={updateStudent} />
+        <MyForm key={editingStudent ? editingStudent.id : null} onSaveStudent={onSaveStudent} editingStudent={editingStudent} onUpdateStudent={updateStudent} /> */}
+            </div>
         </div>
     );
 }

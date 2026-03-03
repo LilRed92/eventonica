@@ -2,7 +2,7 @@ import React from 'react';
 import ViewEvent from './ViewEvent'; 
 import AddEventForm from './AddEventForm';
 
-export default function EventCard({ event, setModalOpen, onAddEvent, onUpdateEvent, onDeleteEvent }) {
+export default function EventCard({ event, setModalOpen, onAddEvent, onUpdateEvent, onDeleteEvent, setIsEditing, isEditing }) {
     
    
     const creatingEvent = !event;
@@ -20,13 +20,17 @@ export default function EventCard({ event, setModalOpen, onAddEvent, onUpdateEve
 
             
                 {creatingEvent ? (
-                    <AddEventForm onAddEvent={onAddEvent} />
+                    <AddEventForm 
+                        onAddEvent={onAddEvent}
+                        setIsEditing={isEditing}
+                    />
                 ) : (
                     <ViewEvent 
                         event={event} 
                         onUpdateEvent={onUpdateEvent}
                         onDeleteEvent={onDeleteEvent}
                         setModalOpen={setModalOpen}
+                        setIsEditing={isEditing}
                     />
                 )}
             </div>

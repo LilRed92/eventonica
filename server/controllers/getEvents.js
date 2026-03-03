@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import pl from '../db/db-connection.js';
 dotenv.config();
 
-// TODO Need to modify getQuery function to a switch statement for (searchInput, filterFavorites, & standard GET query)
+
 function getQuery(searchInput) {
     if(searchInput) {
         const query = {

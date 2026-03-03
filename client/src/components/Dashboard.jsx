@@ -34,15 +34,17 @@ const Dashboard = () => {
 
     
     
-    const onAddEvent = (newEvent) => {
-        setEvents((prevEvents) => [...prevEvents, newEvent]);
-        setModalOpen(false); // Close modal on success
+    const handleAddEvent = (data) => {
+        setEvents((prevEvents) => [...prevEvents, data]);
+        setModalOpen(false); 
+        loadEvents();
     };
 
     const onUpdateEvent = (updatedEvent) => {
         setEvents((prevEvents) => 
             prevEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event)
         );
+        loadEvents();
     };
 
     const handleDelete = async (eventId) => {
@@ -50,7 +52,8 @@ const Dashboard = () => {
             const response = await fetch(`http://localhost:3000/api/events/${eventId}`, { method: "DELETE" });
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             
-            setEvents((prevEvents) => prevEvents.filter(event => event.id !== eventId));
+            setEvents((prevEvents) => prevEvents.filter(event => event.id !== event.id));
+            loadEvents();
         } catch (err) {
             console.error('Fetch error:', err);
         }
@@ -125,7 +128,7 @@ const Dashboard = () => {
                 <EventCard 
                     event={selectedEvent} 
                     setModalOpen={setModalOpen} 
-                    onAddEvent={onAddEvent} 
+                    onAddEvent={handleAddEvent} 
                     onUpdateEvent={onUpdateEvent}    
                     onDeleteEvent={handleDelete}     
                 />

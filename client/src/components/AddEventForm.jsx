@@ -24,7 +24,7 @@ const formReducer = (state, action) => {
     };
 };
 
-const AddEventForm = ({ onAddEvent }) => {
+const AddEventForm = ({ onAddEvent, setIsEditing, isEditing }) => {
    
     const [eventData, dispatch] = useReducer(formReducer, initialFormState);
     const [categories, setCategories] = useState([]);
@@ -48,6 +48,11 @@ const AddEventForm = ({ onAddEvent }) => {
     const clearForm = () => {
         dispatch({ type: 'RESET_FORM' });
     };
+
+    const handleCancel = () => {
+        setIsEditing(false);
+        clearForm();
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,6 +82,8 @@ const AddEventForm = ({ onAddEvent }) => {
         }
     };
 
+    
+
     return (
         <Form className='form-events' onSubmit={handleSubmit}>
             <Form.Group>
@@ -102,8 +109,8 @@ const AddEventForm = ({ onAddEvent }) => {
                 >
                     <option value="" disabled>Select a category...</option>
                     {categories.map((cat, index) => (
-                        <option key={index} style={{backgroundColor: cat.color}} value={cat.name || cat.category_name}>
-                            {cat.name || cat.category_name} {cat.emoji}
+                        <option key={cat.id} style={{backgroundColor: cat.color}} value={cat.id}>
+                            {cat.category_name} {cat.emoji}
                         </option>
                     ))}
                 </Form.Select>
@@ -154,11 +161,20 @@ const AddEventForm = ({ onAddEvent }) => {
             />
 
             <Form.Group>
-                <Button type="submit" variant="outline-success" style={{ marginTop: '1rem' }}>
-                    Add Event
-                </Button>
+               {!isEditing ? (
+                <div className="form-buttons">
+                    <Button type="submit" variant="outline-success">Add Event</Button>
+                    <Button type="button" variant="outline-secondary" onClick={handleCancel}>Cancel</Button>
+                </div>
+               ) : (
+                <div className="form-buttons">
+                    <Button type="submit" variant="outline-success">Save Changes</Button>
+                    <Button type="button" variant="outline-secondary" onClick={handleCancel}>Cancel</Button>
+                </div>
+               )} 
             </Form.Group>
         </Form>
+        
     );
 };
 

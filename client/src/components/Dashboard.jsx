@@ -4,23 +4,24 @@ import { SearchEvents } from './SearchFilter';
 
 const Dashboard = () => {
 
-    // --- Core State ---
+   
     const [events, setEvents] = useState([]);
     
-    // --- Modal State ---
+
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     
-    // --- Filter State ---
+  
     const [searchInput, setSearchInput] = useState('');
     const [showFavorites, setShowFavorites] = useState(false);
 
-    // --- Data Fetching ---
+  
     const loadEvents = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/events`);
+            const response = await fetch(`http://localhost:3000/api/events`);
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             const data = await response.json();
+            console.log("Data from server:", data);
             setEvents(data);
         } catch (err) {
             console.error('Error fetching events:', err);
@@ -31,7 +32,7 @@ const Dashboard = () => {
         loadEvents();
     }, []);
 
-    // --- State Update Handlers (CRUD) ---
+    
     
     const onAddEvent = (newEvent) => {
         setEvents((prevEvents) => [...prevEvents, newEvent]);
@@ -45,10 +46,8 @@ const Dashboard = () => {
     };
 
     const handleDelete = async (eventId) => {
-        // Optimistic UI update or wait for server confirmation. 
-        // Here, we wait for the server to confirm deletion before removing from state.
         try {
-            const response = await fetch(`http://localhost:8080/events/${eventId}`, { method: "DELETE" });
+            const response = await fetch(`http://localhost:3000/api/events/${eventId}`, { method: "DELETE" });
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             
             setEvents((prevEvents) => prevEvents.filter(event => event.id !== eventId));
@@ -57,19 +56,18 @@ const Dashboard = () => {
         }
     };
 
-    // --- Modal Toggles ---
 
     const handleOpenNewEvent = () => {
-        setSelectedEvent(null); // Null tells EventCard to render AddEventForm
+        setSelectedEvent(null); 
         setModalOpen(true);
     };
 
     const handleOpenViewEvent = (eventToView) => {
-        setSelectedEvent(eventToView); // Passing the object tells EventCard to render ViewEvent
+        setSelectedEvent(eventToView); 
         setModalOpen(true);
     };
 
-    // --- Frontend Filtering ---
+    
 
     const filteredEvents = events.filter((event) => {
         const matchesSearch = event.event_name.toLowerCase().includes(searchInput.toLowerCase());
@@ -78,7 +76,9 @@ const Dashboard = () => {
         return matchesSearch && matchesFavorites;
     });
 
-    // --- Render ---
+    const eventsToDisplay = (searchInput !== '' || showFavorites) ? filteredEvents : events;
+
+
 
     return (
         <div className="dashboard">
@@ -96,24 +96,19 @@ const Dashboard = () => {
             
             <div className="events-list">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Event Name</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
                     <tbody>
-                    {filteredEvents.map((event) => (
+                    {eventsToDisplay.map((event) => (
                         <tr key={event.id}>
-                            <td>{event.event_name} {event.is_favorite ? "❤️" : ""}</td>
-                            <td>{event.category}</td>
+                            <td>{event.event_name}</td>
+                            <td style={{backgroundColor: event.color}}>{event.emoji} {event.category_name}</td>
                             <td>{event.event_description}</td>
                             <td>{new Date(event.start_time).toLocaleString()}</td>
                             <td>{new Date(event.end_time).toLocaleString()}</td>
+                            <td>
+                                <button onClick={() => handleChangeFavorite(event)} className="favorite">
+                                    {event.is_favorite ? "❤️" : "🩶"}
+                                </button>
+                            </td>
                             <td>
                                 <button onClick={() => handleOpenViewEvent(event)} className="editBtn">
                                     View / Edit

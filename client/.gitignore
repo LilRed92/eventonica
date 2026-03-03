@@ -131,3 +131,4 @@ dist
 
 # User
 .DS_Store
+.env

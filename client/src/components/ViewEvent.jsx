@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Button, Form } from "react-bootstrap";
 
-// 1. Reducer to handle the form state when in "Edit Mode"
+
 const editReducer = (state, action) => {
     if (action.type === 'RESET_FORM') {
-        return action.payload; // Resets back to the original event data
+        return action.payload;
     }
     return {
         ...state,
@@ -13,14 +13,13 @@ const editReducer = (state, action) => {
 };
 
 const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
-    // State to toggle between reading the event and editing the event
+
     const [isEditing, setIsEditing] = useState(false);
     
-    // State for the edit form
+
     const [editData, dispatch] = useReducer(editReducer, event);
     const [categories, setCategories] = useState([]);
 
-    // Fetch categories ONLY if the user clicks "Edit"
     useEffect(() => {
         if (isEditing && categories.length === 0) {
             fetch("http://localhost:8080/categories") 
@@ -30,18 +29,18 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
         }
     }, [isEditing, categories.length]);
 
-    // --- Action Handlers ---
+  
 
     const handleToggleFavorite = async () => {
         try {
-            // Hits toggleFavorite.js controller
-            const response = await fetch(`http://localhost:8080/events/${event.id}/favorite`, {
+            
+            const response = await fetch(`http://localhost:3000/api/events/${event.id}/favorites`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ toggleFavorite: !event.is_favorite }),
             });
             const updatedEvent = await response.json();
-            onUpdateEvent(updatedEvent); // Updates the master list in Dashboard
+            onUpdateEvent(updatedEvent); 
         } catch (error) {
             console.error("Error toggling favorite:", error);
         }
@@ -49,12 +48,12 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
 
     const handleDeleteClick = async () => {
         try {
-            // Hits your deleteEvent.js controller
-            const response = await fetch(`http://localhost:8080/events/${event.id}`, { method: "DELETE" });
+            
+            const response = await fetch(`http://localhost:3000/api/events/${event.id}`, { method: "DELETE" });
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             
-            onDeleteEvent(event.id); // Removes from Dashboard
-            setModalOpen(false);     // Closes the modal immediately
+            onDeleteEvent(event.id); 
+            setModalOpen(false);    
         } catch (err) {
             console.error('Error deleting event:', err);
         }
@@ -62,8 +61,8 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
 
     const handleSaveEdit = async (e) => {
         e.preventDefault();
-        
-        // Maps to the exact names expected by modifyEvent.js
+       
+
         const payload = {
             id: editData.id,
             updatedEventName: editData.event_name,
@@ -75,15 +74,15 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/events/${event.id}`, {
+            const response = await fetch(`http://localhost:3000/api/events/${event.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
             });
             const updatedEvent = await response.json();
             
-            onUpdateEvent(updatedEvent); // Update Dashboard
-            setIsEditing(false);         // Flip back to "Read Only" view
+            onUpdateEvent(updatedEvent); 
+            setIsEditing(false);         
         } catch (error) {
             console.error("Error updating event:", error);
         }
@@ -97,7 +96,7 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
         });
     };
 
-    // --- RENDER: EDIT MODE ---
+
     if (isEditing) {
         return (
             <Form className='form-events' onSubmit={handleSaveEdit}>
@@ -136,29 +135,28 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
                 <div className="form-buttons">
                     <Button type="submit" variant="outline-success">Save Changes</Button>
                     <Button type="button" variant="outline-secondary" onClick={() => {
-                        setIsEditing(false); // Close edit mode
-                        dispatch({ type: 'RESET_FORM', payload: event }); // Discard unsaved typing
+                        setIsEditing(false); 
+                        dispatch({ type: 'RESET_FORM', payload: event }); 
                     }}>Cancel</Button>
                 </div>
             </Form>
         );
     }
 
-    // --- RENDER: READ-ONLY MODE ---
+  
     return (
         <div className="view-event-details">
             <h2>{event.event_name}</h2>
             
             <div><strong>Category:</strong> {event.category}</div>
             <div><strong>Description:</strong> {event.event_description}</div>
-            {/* Formats the raw timestamp into a readable date/time string */}
             <div><strong>Start:</strong> {new Date(event.start_time).toLocaleString()}</div>
             <div><strong>End:</strong> {new Date(event.end_time).toLocaleString()}</div>
             
             <div className="favorite-container">
                 <strong>Favorite:</strong>
                 <button className="favorite-btn" onClick={handleToggleFavorite}>
-                    {event.is_favorite ? "❤️" : "🤍"}
+                    {event.is_favorite ? "❤️" : "🩶"}
                 </button>
             </div>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Button, Form } from "react-bootstrap";
 
-// 1. Define the initial state outside the component
+
 const initialFormState = {
     event_name: "",
     category: "",
@@ -11,14 +11,13 @@ const initialFormState = {
     is_favorite: false
 };
 
-// 2. Define the reducer function
+
 const formReducer = (state, action) => {
     if (action.type === 'RESET_FORM') {
         return initialFormState;
     }
     
-    // Because action.type matches the input name perfectly, 
-    // we can dynamically update the exact key in our state object.
+    
     return {
         ...state,
         [action.type]: action.payload
@@ -26,22 +25,22 @@ const formReducer = (state, action) => {
 };
 
 const AddEventForm = ({ onAddEvent }) => {
-    // 3. Initialize useReducer
+   
     const [eventData, dispatch] = useReducer(formReducer, initialFormState);
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/categories") 
+        fetch("http://localhost:3000/api/categories") 
             .then((response) => response.json())
             .then((data) => setCategories(data))
             .catch((error) => console.error("Error fetching categories:", error));
     }, []);
 
-    // 4. Dispatch the action type as the input's name
+  
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         dispatch({
-            type: name, // This passes 'event_name', 'category', etc.
+            type: name, 
             payload: type === 'checkbox' ? checked : value
         });
     };
@@ -53,7 +52,7 @@ const AddEventForm = ({ onAddEvent }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Map the reducer state to your backend's expected payload
+      
         const payload = {
             newEventName: eventData.event_name,
             selectedCategory: eventData.category,
@@ -64,7 +63,7 @@ const AddEventForm = ({ onAddEvent }) => {
         };
 
         try {
-            const response = await fetch("http://localhost:8080/events", {
+            const response = await fetch("http://localhost:3000/api/events", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
@@ -103,8 +102,8 @@ const AddEventForm = ({ onAddEvent }) => {
                 >
                     <option value="" disabled>Select a category...</option>
                     {categories.map((cat, index) => (
-                        <option key={index} value={cat.name || cat.category_name}>
-                            {cat.name || cat.category_name}
+                        <option key={index} style={{backgroundColor: cat.color}} value={cat.name || cat.category_name}>
+                            {cat.name || cat.category_name} {cat.emoji}
                         </option>
                     ))}
                 </Form.Select>

@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import db from '../db/db-connection.js';
+import pl from '../db/db-connection.js';
 dotenv.config();
 
 // Logic for POST request for adding an event to events with endpoint '/events'
@@ -13,6 +13,7 @@ export const createEvent = async (req, res) => {
             end_time: req.body.newEnd,
             is_favorite: req.body.newFavorite
         }
+        const db = await pl.connect();
         const result = await db.query(`INSERT INTO events(event_name, category, event_description, start_time, end_time, is_favorite) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [newEvent.event_name, newEvent.category, newEvent.event_description, newEvent.start_time, newEvent.end_time, newEvent.is_favorite]);
         console.log(result.rows[0]);
         res.json(result.rows[0])

@@ -50,7 +50,9 @@ const Dashboard = () => {
     const handleDelete = async (eventId) => {
         try {
             const response = await fetch(`http://localhost:3000/api/events/${eventId}`, { method: "DELETE" });
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
             
             setEvents((prevEvents) => prevEvents.filter(event => event.id !== event.id));
             loadEvents();

@@ -1,3 +1,6 @@
+TODO
+-- Update to use pg_dump file instead of this one. 
+
 CREATE TABLE IF NOT EXISTS categories (
 	id SERIAL PRIMARY KEY,
 	category_name VARCHAR(100) NOT NULL,

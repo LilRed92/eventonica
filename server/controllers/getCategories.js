@@ -1,13 +1,14 @@
 import dotenv from 'dotenv';
-import db from '../db/db-connection.js';
+import pl from '../db/db-connection.js';
 dotenv.config();
 
 // Logic for GET request for all categories with endpoint '/:categoriesId'
 
 export const getCategories = async (req, res) => {
     try {
-        const { rows: categories } = await db.query('SELECT * FROM categories');
-        res.json(categories);
+        const db = await pl.connect();
+        const result = await db.query('SELECT * FROM categories');
+        res.json(result.rows);
         console.log('GET QUERY OF CATEGORIES IS WORKING');
 
     } catch (err) {

@@ -1,17 +1,17 @@
 import dotenv from 'dotenv';
-import db from '../db/db-connection.js';
+import pl from '../db/db-connection.js';
 dotenv.config();
 
 
 function getQuery(searchInput) {
     if(searchInput) {
         const query = {
-            text: 'SELECT * FROM events WHERE event_name=$1',
+            text: 'SELECT events.*, categories.category_name, categories.emoji, categories.color FROM events JOIN categories ON events.category = categories.id WHERE event_name=$1',
             values: [searchInput],
           };
           return query;
     } else {
-        return 'SELECT * FROM events';
+        return 'SELECT events.*, categories.category_name, categories.emoji, categories.color FROM events JOIN categories ON events.category = categories.id';
     }
 }
 // Logic for GET request for all events with endpoint '/events'
@@ -19,8 +19,9 @@ function getQuery(searchInput) {
 export const getEvents = async (req, res) => {
     const searchInput = req.query.searchInput;
     try {
-        const { rows: events } = await db.query(getQuery(searchInput));
-        res.json(events);
+        const db = await pl.connect();
+        const result = await db.query(getQuery(searchInput));
+        res.json(result.rows);
         console.log('GET QUERY OF EVENTS IS WORKING');
 
     } catch (err) {

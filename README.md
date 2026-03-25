@@ -1,6 +1,6 @@
 # Eventonica 🎉
 
-Eventonica is a full-stack web application for managing, discovering, and organizing events. Built with a robust PERN stack (PostgreSQL, Express, React, Node.js), this application allows users to seamlessly add events, assign categories, update details, search by name, and track their favorite activities. 
+Eventonica is a full-stack web application with CRUD for managing, discovering, and organizing events. Built with a robust PERN stack (PostgreSQL, Express, React, Node.js), this application allows users to seamlessly add events, assign categories, update details, search by name, and track their favorite activities. 
 
 ## 🛠️ Built With
 
@@ -113,3 +113,12 @@ npm run dev
 - The frontend will be running on http://localhost:5173
 
 - The backend API will be listening on http://localhost:3000
+
+## Future Feature Updates
+
+- [ ] **Transition to TypeScript:** Migrate the existing JavaScript codebase to TypeScript to improve type safety, code maintainability, and the overall developer experience.
+- [ ] **Expand Database Schema:** Add a `users` table to the PostgreSQL database to support individual user profiles.
+- [ ] **Implement User Favorites:** Create a `user_favorites` join table to establish a many-to-many relationship, allowing multiple users to maintain their own unique lists of favorited events.
+- [ ] **Integrate Authentication:** Implement secure user authentication to allow individuals to register, log in, and manage their personalized event dashboards.
+- [ ] **Add Comprehensive Testing:** Write and implement automated tests across the frontend, backend, and API to ensure application reliability.
+- [ ] **Deploy Application:** Deploy the completed application to a cloud hosting platform for live, public access.

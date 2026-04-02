@@ -8,7 +8,7 @@ Eventonica is a full-stack web application with CRUD for managing, discovering, 
 
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/) [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/) [![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 
-[![NPM](https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/) [![Dotenv](https://img.shields.io/badge/Dotenv-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black)](https://github.com/motdotla/dotenv) [![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=for-the-badge&logo=nodemon&logoColor=white)](https://nodemon.io/) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+[![NPM](https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/) [![Dotenv](https://img.shields.io/badge/Dotenv-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black)](https://github.com/motdotla/dotenv) [![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=for-the-badge&logo=nodemon&logoColor=white)](https://nodemon.io/) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)[![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com/) [![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com/)
 
 ## ✨ Features
 
@@ -114,6 +114,14 @@ npm run dev
 
 - The backend API will be listening on http://localhost:3000
 
+## 🌍 Deployment
+This application is configured for continuous deployment (CD) utilizing GitHub Actions.
+
+* **Frontend:** Deployed and hosted via Netlify.
+* **Backend API & Database:** Deployed and hosted via Render.
+
+The `.github/workflows/ci.yml` pipeline is set up to automatically trigger production deployments when code is pushed or merged into the main branch. Deployments are only executed if all prerequisite linting, formatting, and tests pass successfully.
+
 ## Future Feature Updates
 
 - [ ] **Transition to TypeScript:** Migrate the existing JavaScript codebase to TypeScript to improve type safety, code maintainability, and the overall developer experience.
@@ -121,4 +129,4 @@ npm run dev
 - [ ] **Implement User Favorites:** Create a `user_favorites` join table to establish a many-to-many relationship, allowing multiple users to maintain their own unique lists of favorited events.
 - [ ] **Integrate Authentication:** Implement secure user authentication to allow individuals to register, log in, and manage their personalized event dashboards.
 - [ ] **Add Comprehensive Testing:** Write and implement automated tests across the frontend, backend, and API to ensure application reliability.
-- [ ] **Deploy Application:** Deploy the completed application to a cloud hosting platform for live, public access.
+- [x] **Deploy Application:** Deploy the completed application to a cloud hosting platform for live, public access.

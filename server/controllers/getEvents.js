@@ -23,6 +23,7 @@ export const getEvents = async (req, res) => {
         const result = await db.query(getQuery(searchInput));
         res.json(result.rows);
         console.log('GET QUERY OF EVENTS IS WORKING');
+        console.log(result);
 
     } catch (err) {
         console.error('Error querying events table:', err);

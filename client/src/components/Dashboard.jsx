@@ -18,7 +18,7 @@ const Dashboard = () => {
   
     const loadEvents = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/events`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events`);
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             const data = await response.json();
             console.log("Data from server:", data);
@@ -49,7 +49,7 @@ const Dashboard = () => {
 
     const handleDelete = async (eventId) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${eventId}`, { method: "DELETE" });
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${eventId}`, { method: "DELETE" });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

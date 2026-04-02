@@ -22,7 +22,7 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/categories") 
+        fetch(`${import.meta.env.VITE_API_URL}/api/categories`) 
             .then((response) => response.json())
             .then((data) => setCategories(data))
             .catch((error) => console.error("Error fetching categories:", error));
@@ -50,7 +50,7 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
     const handleToggleFavorite = async () => {
         try {
             
-            const response = await fetch(`http://localhost:3000/api/events/${event.id}/favorites`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${event.id}/favorites`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ toggleFavorite: !event.is_favorite }),
@@ -65,7 +65,7 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
     const handleDeleteClick = async () => {
         try {
             
-            const response = await fetch(`http://localhost:3000/api/events/${event.id}`, { method: "DELETE" });
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${event.id}`, { method: "DELETE" });
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             
             onDeleteEvent(event.id); 
@@ -90,7 +90,7 @@ const ViewEvent = ({ event, onUpdateEvent, onDeleteEvent, setModalOpen }) => {
         };
 
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${event.id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${event.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),

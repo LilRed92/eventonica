@@ -144,3 +144,4 @@ generate-commit.js
 .husky/
 commitlint.config.js
 .ai-commit-rules.txt
+planning_setup/

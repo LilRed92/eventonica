@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict t8lvrNQoWzbb6JzbYjIpGTxi5tSwMjYO4m2RSuIpmG8ccS7lAecYvYblF8g340p
+\restrict B784gfzWdZ9IgCf6D2pcWregUteplFgfmqIf6ISWxtEhh49uD71hoW697OFgn6X
 
 -- Dumped from database version 14.20 (Homebrew)
 -- Dumped by pg_dump version 14.20 (Homebrew)
@@ -141,11 +141,6 @@ COPY public.categories (id, category_name, emoji, color) FROM stdin;
 --
 
 COPY public.events (id, event_name, category, event_description, start_time, end_time, is_favorite) FROM stdin;
-3	Database Architecture Workshop	3	A deep dive into PostgreSQL relational database design and optimization techniques.	2026-03-20 11:00:00-05	2026-03-20 13:00:00-05	t
-1	Frontend Study Group	1	Collaborative study session focusing on React components and state management.	2026-03-10 19:00:00-05	2026-03-10 21:00:00-05	t
-2	Tech Networking Mixer	2	Monthly networking event for local developers, designers, and recruiters.	2026-03-15 20:00:00-05	2026-03-15 22:00:00-05	t
-4	Hackathon Kickoff	1	Opening ceremony and team formation for the weekend hackathon.	2026-03-25 18:00:00-05	2026-03-25 20:00:00-05	t
-5	Test	2	Test	2026-03-03 23:35:00-06	2026-03-05 23:35:00-06	f
 \.
 
 
@@ -160,7 +155,7 @@ SELECT pg_catalog.setval('public.categories_id_seq', 8, true);
 -- Name: events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.events_id_seq', 11, true);
+SELECT pg_catalog.setval('public.events_id_seq', 1, false);
 
 
 --
@@ -219,5 +214,5 @@ ALTER TABLE ONLY public.events
 -- PostgreSQL database dump complete
 --
 
-\unrestrict t8lvrNQoWzbb6JzbYjIpGTxi5tSwMjYO4m2RSuIpmG8ccS7lAecYvYblF8g340p
+\unrestrict B784gfzWdZ9IgCf6D2pcWregUteplFgfmqIf6ISWxtEhh49uD71hoW697OFgn6X
 

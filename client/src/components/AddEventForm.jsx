@@ -30,7 +30,7 @@ const AddEventForm = ({ onAddEvent, setIsEditing, isEditing }) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/categories") 
+        fetch(`${import.meta.env.VITE_API_URL}/api/categories`) 
             .then((response) => response.json())
             .then((data) => setCategories(data))
             .catch((error) => console.error("Error fetching categories:", error));
@@ -68,7 +68,7 @@ const AddEventForm = ({ onAddEvent, setIsEditing, isEditing }) => {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/api/events", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),

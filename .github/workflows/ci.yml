@@ -60,8 +60,8 @@ jobs:
           # Provide a dummy URL so Vite can build successfully
           VITE_API_URL: http://localhost:3000
     
-      # --- JOB 2: The new linting and commit checking job ---
-      lint-and-format:
+    # --- JOB 2: The new linting and commit checking job ---
+    lint-and-format:
         runs-on: ubuntu-latest
         steps:
           - name: Checkout repository

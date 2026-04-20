@@ -24,11 +24,11 @@ _(Replace these placeholder links with actual paths to your screenshots/gifs onc
 
 |                 Dashboard View                 |                 Add/Edit Event                 |
 | :--------------------------------------------: | :--------------------------------------------: |
-| ![Dashboard View](./screenshots/dashboard.png) | ![Add Event Form](./screenshots/add-event.png) |
+| <img width="1586" height="945" alt="Eventonica_Dashboard" src="https://github.com/user-attachments/assets/335dfe69-52d4-4597-87ed-e42e1b161cd0" /> | <img width="1586" height="737" alt="Eventonica_Add-Edit" src="https://github.com/user-attachments/assets/e6522f59-5340-44f5-8889-56be98e960cb" /> |
 
 |             Search & Filter Functionality             |
 | :---------------------------------------------------: |
-| ![Search Filter GIF](./screenshots/search-filter.gif) |
+| <img width="1280" height="720" alt="Eventonica_Toggle-Favorites" src="https://github.com/user-attachments/assets/c1830e87-8bec-40ad-81a3-283f89330f3d" /> |
 
 ## 💻 Tech Stack
 
@@ -132,7 +132,7 @@ This application is configured for continuous deployment (CD) utilizing GitHub A
 
 The `.github/workflows/ci.yml` pipeline is set up to automatically trigger production deployments when code is pushed or merged into the main branch. Deployments are only executed if all prerequisite linting, formatting, and tests pass successfully.
 
-Visit the deployed version of ![Eventonica](https://eventonica-kd.netlify.app/)!
+Visit the deployed version of [Eventonica](https://eventonica-kd.netlify.app/)!
 
 ## Future Feature Updates
 

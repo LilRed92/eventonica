@@ -133,8 +133,15 @@ dist
 .DS_Store
 
 #IDE
-.vscode/ 
+.vscode/
+**./vscode
+.vscode
 
 # User 
 .history/
 TODO
+generate-commit.js
+.husky/
+commitlint.config.js
+.ai-commit-rules.txt
+planning_setup/

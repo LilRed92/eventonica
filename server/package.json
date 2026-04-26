@@ -3,19 +3,26 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "dev": " concurrently 'npm start' 'cd .. && cd client && npm run dev' ",
-    "start": "nodemon server.js",
-    "server": "nodemon server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^7.6.0",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2",
+    "express": "^4.22.1",
     "nodemon": "^1.0.2",
+    "pg": "^8.19.0",
     "pg-promise": "^11.4.3"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2"
   }
 }

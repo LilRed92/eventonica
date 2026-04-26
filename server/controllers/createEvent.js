@@ -1,0 +1,24 @@
+import dotenv from 'dotenv';
+import pl from '../db/db-connection.js';
+dotenv.config();
+
+// Logic for POST request for adding an event to events with endpoint '/events'
+export const createEvent = async (req, res) => {
+    try {
+        const newEvent = {
+            event_name: req.body.newEventName,
+            category: req.body.selectedCategory,
+            event_description: req.body.newDescription,
+            start_time: req.body.newStart,
+            end_time: req.body.newEnd,
+            is_favorite: req.body.newFavorite
+        }
+        const db = await pl.connect();
+        const result = await db.query(`INSERT INTO events(event_name, category, event_description, start_time, end_time, is_favorite) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [newEvent.event_name, newEvent.category, newEvent.event_description, newEvent.start_time, newEvent.end_time, newEvent.is_favorite]);
+        console.log(result.rows[0]);
+        res.json(result.rows[0])
+    } catch (err) {
+        console.error('Error inserting into eventonica DB:', err); 
+        return res.status(500).json({ message: 'Internal Server Error', detail: err.message });
+    }
+};
